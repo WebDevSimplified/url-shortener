@@ -2,7 +2,7 @@
   "name": "A simple url shortener",
   "description": "How To Build A URL Shortener With Node.js, Express, and MongoDB",
   "repository": "https://github.com/WebDevSimplified/url-shortener",
-  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "logo": "https://pbs.twimg.com/profile_images/1086003406488113153/XBSj69e5_400x400.jpg",
   "keywords": ["node", "express", "mongo", "url", "short"],
   "addons": ["mongolab:sandbox"],
   "success_url": "/"
