@@ -1,17 +1,18 @@
 {
   "name": "url-shortener",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.1.0",
+  "description": "As seen on YouTube: https://www.youtube.com/watch?v=SLpUKAGnm-g",
+  "main": "server.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "start": "node ./server.js"
   },
-  "author": "",
+  "author": "WebDevSimplified",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "mongoose": "^5.9.1",
+    "mongoose": "^5.9.2",
     "shortid": "^2.2.15"
   },
   "devDependencies": {
