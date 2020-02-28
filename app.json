@@ -1,0 +1,9 @@
+{
+  "name": "A simple url shortener",
+  "description": "How To Build A URL Shortener With Node.js, Express, and MongoDB",
+  "repository": "https://github.com/balexandre/url-shortener",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "mongo", "url", "short"],
+  "addons": ["mongolab:sandbox"],
+  "success_url": "/"
+}
