@@ -27,7 +27,7 @@ If you got the project from GitHub, open the terminal inside the project folder 
 $ npm install
 ```
 
-For run the server, use this command:
+To run the server, use this command:
 ```bash
 $ npm run devStart
 ```
