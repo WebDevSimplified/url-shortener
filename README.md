@@ -32,4 +32,4 @@ To run the server, use this command:
 $ npm run devStart
 ```
 
-Now, open your browser and type: `https://localhost:5000`
+Now, open your browser and type: `localhost:5000`
