@@ -1,11 +1,11 @@
-#URL Shortener
+# URL Shortener
 -----
 
 Free custom URL Shortener and branded URLs with advanced links tracking and Link Management Platform & API. Shorten and replace long URL to short link.
 
 Made with NodeJS + EJS (View) 👊
 
-##Get Started
+## Get Started
 
 ##### Install
 
