@@ -38,7 +38,6 @@ app.get('/:shortUrl', async (req, res) => {
   shortUrl.save()
 
   // res.redirect(shortUrl.full)
-  // Added warn
   res.render('redirect', { url: shortUrl.full })
 })
 
