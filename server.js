@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
 const app = express()
 
-mongoose.connect('mongodb://localhost/urlShortener', {
+mongoose.connect(process.env['MONGO_URI'], {
   useNewUrlParser: true, useUnifiedTopology: true
 })
 
@@ -11,12 +11,21 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 
 app.get('/', async (req, res) => {
-  const shortUrls = await ShortUrl.find()
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
+	
+  const shortUrls = await ShortUrl.find({ ip: ip })
   res.render('index', { shortUrls: shortUrls })
 })
 
-app.post('/shortUrls', async (req, res) => {
-  await ShortUrl.create({ full: req.body.fullUrl })
+app.post('/shorten', async (req, res) => {
+  var fullUrl = req.body.fullUrl
+  const shortUrl = req.body.shortUrl || undefined
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
+	
+  if (!fullUrl.includes('http')) {
+	  fullUrl = 'http://' + fullUrl
+  }
+  await ShortUrl.create({ full: fullUrl, short: shortUrl, ip: ip })
 
   res.redirect('/')
 })
@@ -28,7 +37,8 @@ app.get('/:shortUrl', async (req, res) => {
   shortUrl.clicks++
   shortUrl.save()
 
-  res.redirect(shortUrl.full)
+  // res.redirect(shortUrl.full)
+  res.render('redirect', { url: shortUrl.full })
 })
 
 app.listen(process.env.PORT || 5000);
