@@ -1,4 +1,44 @@
-You will be redirected to <a href="<%= url %>"><%= url %></a> shortly...
-<script>
+<style>
+  	body {
+      background-color: #fff;
+      margin-top: 3px;
+  }
+  		body, div, a {
+      font-family: Roboto,arial,sans-serif;
+  }
+  	div.notice {
+      border-top: 1px solid #dadce0;
+      border-bottom: 1px solid #dadce0;
+      background: #f8f9fa;
+      margin-top: 1em;
+      width: 100%;
+  	color: #000000;
+      }
+  	div.redirectText {
+      padding: 0.5em 0;
+      margin-left: 10px;
+  }
+  div.information {
+      margin-left: 35px;
+      margin-top: 35px;
+  	color: #000000;
+  }
+</style>
+
+<div class="notice">
+  <div class="redirectText">
+    <font style="font-size:larger">
+      <b>Redirect Notice</b>
+    </font>
+  </div>
+</div>
+<div class="information">
+  &nbsp;The previous page is sending you to
+  <a href="<%= url %>"><%= url %></a>.<br /><br />&nbsp;If you do not want to
+  visit that page, you can
+  <a href="javascript:history.back()">return to the previous page</a
+  >.<br /><br /><br />
+</div>
+<!-- <script>
 	setTimeout(function(){ window.location.replace('<%= url %>') }, 4300)
-</script>
+</script> -->

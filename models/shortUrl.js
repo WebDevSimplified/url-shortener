@@ -15,11 +15,16 @@ const shortUrlSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+ //  timestamp: {
+ //    type: String,
+ //    required: true,
+	// default: new Date()
+ //  },
   clicks: {
     type: Number,
     required: true,
     default: 0
   }
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('ShortUrl', shortUrlSchema)

@@ -5,9 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <title>Document</title>
+  <title>Ani Shorten</title>
 </head>
 <body>
+	
+<div class="hidden" id="banner">
+  <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between flex-wrap">
+      <div class="w-0 flex-1 flex items-center">
+        <span class="flex p-2 rounded-lg" id="bannerIco">
+          <!-- Heroicon name: outline/speakerphone -->
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+          </svg>
+        </span>
+        <p class="ml-3 font-medium text-white truncate">
+          <span class="md:hidden" id="mobBanner">  </span>
+          <span class="hidden md:inline" id="deskBanner">  </span>
+        </p>
+      </div>
+      <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
+        <button type="button" onclick="document.querySelector('#banner').classList.add('hidden')" class="-mr-1 flex p-2 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2">
+          <span class="sr-only">Dismiss</span>
+          <!-- Heroicon name: outline/x -->
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="container">
 <header class="bg-white shadow">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -28,7 +56,7 @@
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
             <div class="grid grid-cols-3 gap-6">
               <div class="col-span-3 sm:col-span-2">
-                <label for="fullUrl" class="block text-sm font-medium text-gray-700"> Website </label>
+                <label for="fullUrl" class="block text-sm font-medium text-gray-700"> Website * </label>
                 <div class="mt-1 flex rounded-md shadow-sm">
                   <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"> http:// </span>
                   <input required type="text" name="fullUrl" id="fullUrl" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
@@ -38,7 +66,7 @@
 
             <div class="col-span-6 sm:col-span-4">
               <label for="shortUrl" class="block text-sm font-medium text-gray-700">Short Url</label>
-              <input type="text" name="shortUrl" id="shortUrl" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="example" />
+              <input type="text" name="shortUrl" id="shortUrl" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="A custom path? (optional)" />
             </div>
           </div>
           <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -67,15 +95,21 @@
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full URL</th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Short URL</th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clicks</th>
+			  <th scope="col" class="relative px-6 py-3">
+                <span class="sr-only">Delete</span>
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
 
                      <% shortUrls.forEach(shortUrl => { %>
           <tr>
-            <td><a href="<%= shortUrl.full %>" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500"><%= shortUrl.full %></a></td>
-            <td><a href="<%= shortUrl.short %>" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500"><%= shortUrl.short %></a></td>
+            <td><a href="<%= shortUrl.full %>" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-900"><%= shortUrl.full %></a></td>
+            <td><a href="<%= shortUrl.short %>" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-900"><%= shortUrl.short %></a></td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= shortUrl.clicks %></td>
+			                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <a href="delete/<%= shortUrl.short %>" class="text-red-600 hover:text-red-900">Delete</a>
+              </td>
           </tr>
         <% }) %> 
 
@@ -86,5 +120,30 @@
     </div>
   </div>
 </div>
+<script>
+	let searchParams = new URLSearchParams(location.search);
+	const banner = document.querySelector('#banner')
+	const bannerIco = document.querySelector('#bannerIco')
+	
+	const mobText = document.querySelector('#mobBanner')
+	const deskText = document.querySelector('#deskBanner')
+	if (searchParams.has('err')) {
+		if (searchParams.get('err') === '409') {
+			banner.classList.remove('hidden')
+			mobText.textContent = 'Error! Already Exists!';
+			deskText.textContent = 'Error! The link which you requested to create already exists!';
+
+			banner.classList.add('bg-red-600');
+			bannerIco.classList.add('bg-red-400');
+		} else if (searchParams.get('err') === '204') {
+			banner.classList.remove('hidden');
+			mobText.textContent = 'Removed Successfully!';
+			deskText.textContent = 'Removed the short link Successfully!';
+
+			banner.classList.add('bg-indigo-600');
+			bannerIco.classList.add('bg-indigo-400');
+		}
+	}
+</script>
 </body>
 </html>
