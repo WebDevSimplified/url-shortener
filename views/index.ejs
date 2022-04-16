@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex justify-between">
-			  <input id="image" name="image" type="file" accept="image/*" onchange="createURL(this)" class="block text-sm text-slate-500
+			  <input id="image" name="image" type="file"  onchange="createURL(this)" class="block text-sm text-slate-500
       file:mr-4 file:py-2 file:px-4
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
@@ -159,12 +159,16 @@
 		reader.onload = function (e) {
             var fullUrlEl = document.getElementById('fullUrl');
 			var fileNameEl = document.getElementById('filename');
+			
 			fullUrlEl.value = e.target.result;
 			fileNameEl.value = input.files[0].name;
+
+			fileNameEl.disabled = true;
+			fileNameEl.classList.add('cursor-not-allowed');
+			fileNameEl.classList.add('bg-gray-100');
+		
         };
 		reader.readAsDataURL(input.files[0]);
-
-		
 	}
 </script>
 </body>
