@@ -9,7 +9,7 @@ const shortUrlSchema = new mongoose.Schema({
   short: {
     type: String,
     required: true,
-    default: shortId.generate
+    default: shortId.generate,
   },
   ip: {
     type: String,
@@ -24,7 +24,19 @@ const shortUrlSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: 0
-  }
+  },
+
+	
+  filename: {
+    type: String,
+    required: false,
+	default: ''
+  },
+  mimetype: {
+    type: String,
+    required: false,
+	default: ''
+  },
 }, { timestamps: true })
 
 module.exports = mongoose.model('ShortUrl', shortUrlSchema)

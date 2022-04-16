@@ -36,7 +36,7 @@
     </div>
   </div>
 </div>
-  <div class="container">
+  <div class="w-full h-full">
 <header class="bg-white shadow">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold text-gray-900 text-center">Ani Shorten</h1>
@@ -51,11 +51,12 @@
       </div>
     </div>
     <div class="mt-5 md:mt-0 md:col-span-2">
-      <form action="/shorten" method="POST">
+      <form action="/shorten" method="POST" id="shortenform">
+		<input type="hidden" name="filename" id="filename"></input>
         <div class="shadow sm:rounded-md sm:overflow-hidden">
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
             <div class="grid grid-cols-3 gap-6">
-              <div class="col-span-3 sm:col-span-2">
+              <div class="col-span-6 sm:col-span-4">
                 <label for="fullUrl" class="block text-sm font-medium text-gray-700"> Website * </label>
                 <div class="mt-1 flex rounded-md shadow-sm">
                   <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"> http:// </span>
@@ -69,7 +70,15 @@
               <input type="text" name="shortUrl" id="shortUrl" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="A custom path? (optional)" />
             </div>
           </div>
-          <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+          <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex justify-between">
+			  <input id="image" name="image" type="file" accept="image/*" onchange="createURL(this)" class="block text-sm text-slate-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-full file:border-0
+      file:text-sm file:font-semibold
+      file:bg-violet-50 file:text-violet-700
+      hover:file:bg-violet-100 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500">
             <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <!-- Heroicon name: solid/check -->
               <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -143,6 +152,19 @@
 			banner.classList.add('bg-indigo-600');
 			bannerIco.classList.add('bg-indigo-400');
 		}
+	}
+
+	function createURL(input) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+            var fullUrlEl = document.getElementById('fullUrl');
+			var fileNameEl = document.getElementById('filename');
+			fullUrlEl.value = e.target.result;
+			fileNameEl.value = input.files[0].name;
+        };
+		reader.readAsDataURL(input.files[0]);
+
+		
 	}
 </script>
 </body>
