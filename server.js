@@ -122,8 +122,12 @@ app.get('/delete/:shortUrl', async (req, res) => {
 	if (shortUrl == null) return res.sendStatus(404)
 	
 	await ShortUrl.findOneAndDelete({ short: req.params.shortUrl })
-	
-	res.redirect('/?err=204')
+
+	const filename = shortUrl.filename
+
+	fs.unlink(__dirname + '/uploads/' + filename, () => {
+		res.redirect('/?err=204')	
+	})
 })
 
 app.listen(process.env.PORT || 5000);
