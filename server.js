@@ -40,7 +40,7 @@ app.post('/shorten', upload.single('file'), async (req, res) => {
 	const shortUrl = req.body.shortUrl || undefined
 	const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 	const exists = await ShortUrl.find({ short: shortUrl })
-	var filename = '';
+	var filename = '404';
 
 	if (req.file) {
 		var file = req.file;
