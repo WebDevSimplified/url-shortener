@@ -47,8 +47,9 @@
 </div>
 <script>
 	var redirLinkEl = document.getElementById('redirLink');
-	var urlFilename = redirLinkEl.href.split('/file/')[1]
+	var urlFilename = redirLinkEl.href.split('/file/')
 	if (urlFilename && !urlFilename[2]) {
+		urlFilename = urlFilename[1]
 		if (urlFilename === '<%= filename %>' ) 
 			redirLinkEl.textContent = '<%= filename %>'
 	}

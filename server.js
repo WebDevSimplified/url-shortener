@@ -67,7 +67,14 @@ app.get('/file/:shortUrl', async (req, res) => {
 	const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
 	if (shortUrl == null) return res.sendStatus(404)
 
-	res.sendFile('./uploads/' + shortUrl.filename)
+	var filename = shortUrl.filename;
+	filename = filename.split('/file/')
+
+	if (filename && !filename[2]) { 
+		filename = filename[1]
+		return res.sendFile('./uploads/' + filename)
+	}
+	return res.sendStatus(404)
 })
 
 app.get('/:shortUrl', async (req, res) => {
