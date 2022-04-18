@@ -5,6 +5,7 @@ const ShortUrl = require('./models/shortUrl')
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path')
+const fileupload = true;
 
 function file2Number(filepath, number) {
 	const seperator = '-';
@@ -57,7 +58,7 @@ app.get('/', async (req, res) => {
     const sort = req.query.sort || 'desc';
 	
 	const shortUrls = await ShortUrl.find({ ip: ip }).sort({ createdAt: sort }).exec()
-	res.render('index', { shortUrls: shortUrls })
+	res.render('index', { shortUrls: shortUrls, fileinput: fileupload })
 })
 
 app.post('/shorten', upload.single('file'), async (req, res) => {
@@ -67,7 +68,7 @@ app.post('/shorten', upload.single('file'), async (req, res) => {
 	const exists = await ShortUrl.find({ short: shortUrl })
 	var filename = '404';
 
-	if (req.file) {
+	if (req.file && fileupload) {
 		var file = req.file;
 		var filename = file.filename;
 		fullUrl = '/file/' + filename
