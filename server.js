@@ -45,7 +45,7 @@ app.post('/shorten', upload.single('file'), async (req, res) => {
 	if (req.file) {
 		var file = req.file;
 		var filename = file.filename;
-		fullUrl = '/file/' + shortUrl
+		fullUrl = '/file/' + filename
 	}
 
 	if (!fullUrl.includes('http') && !req.file) {
@@ -63,11 +63,11 @@ app.post('/shorten', upload.single('file'), async (req, res) => {
 	}
 })
 
-app.get('/file/:shortUrl', async (req, res) => {
-	const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
-	if (shortUrl == null) return res.sendStatus(404)
+app.get('/file/:filename', async (req, res) => {
+	// const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
+	// if (shortUrl == null) return res.sendStatus(404)
 
-	var filename = shortUrl.filename;
+	var filename = req.params.filename;
 	// filename = filename.split('/file/')
 
 	console.log(filename)
@@ -75,7 +75,7 @@ app.get('/file/:shortUrl', async (req, res) => {
 	if (filename) { 
 		// filename = filename[1]
 		// console.log(filename)
-		return res.sendFile('./uploads/' + filename)
+		return res.sendFile(__dirname + '/uploads/' + filename)
 	}
 	return res.sendStatus(404)
 })
