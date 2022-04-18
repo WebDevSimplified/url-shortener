@@ -3,13 +3,38 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 const ShortUrl = require('./models/shortUrl')
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path')
+
+function file2Number(filepath, number) {
+	const seperator = '-';
+		
+	let dir = path.dirname(filepath);
+	let ext = path.extname(filepath);
+	let base = path.basename(filepath, ext);
+
+	let append = seperator + number;
+
+	const filename = path.join(dir, base + append + ext);
+
+	return filename;
+}
 
 const storage = multer.diskStorage(
     {
         destination: './uploads/',
         filename: function ( req, file, cb ) {
             //req.body is empty...
-            cb( null, file.originalname );
+			var filename = file.originalname
+			var count = 1;
+			var filepath = __dirname + '/uploads/' + filename
+			while (fs.existsSync(filepath)) {
+				var filename = file2Number(filename, count)
+				var filepath = __dirname + '/uploads/' + filename
+				count += 1;
+			} 
+            cb( null, filename );
+			
         }
     }
 );
