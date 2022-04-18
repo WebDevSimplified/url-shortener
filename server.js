@@ -45,7 +45,7 @@ app.post('/shorten', upload.single('file'), async (req, res) => {
 	if (req.file) {
 		var file = req.file;
 		var filename = file.filename;
-		fullUrl = '/file/' + filename
+		fullUrl = '/file/' + shortUrl
 	}
 
 	if (!fullUrl.includes('http') && !req.file) {
@@ -68,10 +68,13 @@ app.get('/file/:shortUrl', async (req, res) => {
 	if (shortUrl == null) return res.sendStatus(404)
 
 	var filename = shortUrl.filename;
-	filename = filename.split('/file/')
+	// filename = filename.split('/file/')
 
-	if (filename && !filename[2]) { 
-		filename = filename[1]
+	console.log(filename)
+	// if (filename && !filename[2])
+	if (filename) { 
+		// filename = filename[1]
+		// console.log(filename)
 		return res.sendFile('./uploads/' + filename)
 	}
 	return res.sendStatus(404)
