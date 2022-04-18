@@ -51,8 +51,7 @@
       </div>
     </div>
     <div class="mt-5 md:mt-0 md:col-span-2">
-      <form action="/shorten" method="POST" id="shortenform">
-		<input type="hidden" name="filename" id="filename"></input>
+      <form action="/shorten" enctype="multipart/form-data"  method="POST" id="shortenform">
         <div class="shadow sm:rounded-md sm:overflow-hidden">
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
             <div class="grid grid-cols-3 gap-6">
@@ -71,7 +70,7 @@
             </div>
           </div>
           <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex justify-between">
-			  <input id="image" name="image" type="file"  onchange="createURL(this)" class="block text-sm text-slate-500
+			  <input id="file" name="file" type="file"  onchange="createURL(this)" class="block text-sm text-slate-500
       file:mr-4 file:py-2 file:px-4
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
@@ -158,14 +157,13 @@
 		var reader = new FileReader();
 		reader.onload = function (e) {
             var fullUrlEl = document.getElementById('fullUrl');
-			var fileNameEl = document.getElementById('filename');
-			
-			fullUrlEl.value = e.target.result;
-			fileNameEl.value = input.files[0].name;
 
-			fileNameEl.disabled = true;
-			fileNameEl.classList.add('cursor-not-allowed');
-			fileNameEl.classList.add('bg-gray-100');
+			fullUrlEl.value = input.files[0].name;
+
+			fullUrlEl.disabled = true;
+			fullUrlEl.required = true;
+			fullUrlEl.classList.add('cursor-not-allowed');
+			fullUrlEl.classList.add('bg-gray-100');
 		
         };
 		reader.readAsDataURL(input.files[0]);

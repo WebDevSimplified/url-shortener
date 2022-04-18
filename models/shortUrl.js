@@ -29,12 +29,7 @@ const shortUrlSchema = new mongoose.Schema({
 	
   filename: {
     type: String,
-    required: false,
-	default: ''
-  },
-  mimetype: {
-    type: String,
-    required: false,
+    required: true,
 	default: ''
   },
 }, { timestamps: true })

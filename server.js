@@ -1,7 +1,20 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const multer = require('multer')
 const ShortUrl = require('./models/shortUrl')
 const bodyParser = require('body-parser');
+
+const storage = multer.diskStorage(
+    {
+        destination: './uploads/',
+        filename: function ( req, file, cb ) {
+            //req.body is empty...
+            cb( null, file.originalname );
+        }
+    }
+);
+const upload = multer({ storage: storage });
+
 const app = express()
 
 app.use(bodyParser.json());
@@ -22,31 +35,39 @@ app.get('/', async (req, res) => {
 	res.render('index', { shortUrls: shortUrls })
 })
 
-app.post('/shorten', async (req, res) => {
-	var fullUrl = req.body.fullUrl
+app.post('/shorten', upload.single('file'), async (req, res) => {
+	var fullUrl = req.body.fullUrl || ''
 	const shortUrl = req.body.shortUrl || undefined
 	const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 	const exists = await ShortUrl.find({ short: shortUrl })
-	const mimetype = fullUrl.substring(fullUrl.indexOf(":")+1, fullUrl.indexOf(";"));
-	let filename = '';
+	var filename = '';
 
-	if (mimetype) {
-		let filename = req.body.filename;
+	if (req.file) {
+		var file = req.file;
+		var filename = file.filename;
+		fullUrl = '/file/' + filename
 	}
 
-	if (!fullUrl.includes('http') && !mimetype) {
+	if (!fullUrl.includes('http') && !req.file) {
 		fullUrl = 'http://' + fullUrl
 	}
 
-	console.log(exists)
+	// console.log(exists)
 	
 	if (exists.length < 1) {
-		console.log({ full: fullUrl, short: shortUrl, mimetype: mimetype, filename: filename, ip: ip })
-		await ShortUrl.create({ full: fullUrl, short: shortUrl, ip: ip, mimetype: mimetype, filename: filename })
+		// console.log({ full: fullUrl, short: shortUrl, mimetype: mimetype, filename: filename, ip: ip })
+		await ShortUrl.create({ full: fullUrl, short: shortUrl, ip: ip, filename: filename })
 		res.redirect('/')
 	} else {
 		res.redirect('/' + '?err=409')
 	}
+})
+
+app.get('/file/:shortUrl', async (req, res) => {
+	const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
+	if (shortUrl == null) return res.sendStatus(404)
+
+	res.sendFile('./uploads/' + shortUrl.filename)
 })
 
 app.get('/:shortUrl', async (req, res) => {
@@ -57,7 +78,7 @@ app.get('/:shortUrl', async (req, res) => {
 	shortUrl.save()
 
 	// res.redirect(shortUrl.full)
-	res.render('redirect', { url: shortUrl.full, filename: shortUrl.filename, mimetype: shortUrl.mimetype })
+	res.render('redirect', { url: shortUrl.full, filename: shortUrl.filename })
 })
 
 app.get('/delete/:shortUrl', async (req, res) => {

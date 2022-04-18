@@ -37,7 +37,6 @@
   <a href="<%= url %>" id="redirLink"><%= url %></a>.
   <br />
   <br />
-  <pre id="mimetype">&nbsp;</pre>
   &nbsp;If you do not want to
   visit that page, you can
   <a href="javascript:history.back()">return to the previous page</a
@@ -48,30 +47,9 @@
 </div>
 <script>
 	var redirLinkEl = document.getElementById('redirLink');
-	var mimeTypeEl = document.getElementById('mimetype')
-	if ((redirLinkEl.href).startsWith('data:')) {
-		redirLinkEl.addEventListener('click', ()=>{
-			document.documentElement.textContent = '';
-			var iframe = document.createElement('iframe');
-			iframe.style=`
-			    position: fixed;
-			    top: 0px;
-			    bottom: 0px;
-			    right: 0px;
-			    width: 100%;
-			    border: none;
-			    margin: 0;
-			    padding: 0;
-			    overflow: hidden;
-			    z-index: 999999;
-			    height: 100%;
-			`;
-			iframe.src = redirLinkEl.href;
-			document.documentElement.appendChild(iframe);			window.history.pushState(null,null,'/view'+window.location.pathname);
-		})
-		if ('<%= filename %>' != '') 
+	var urlFilename = redirLinkEl.href.split('/file/')[1]
+	if (urlFilename && !urlFilename[2]) {
+		if (urlFilename === '<%= filename %>' ) 
 			redirLinkEl.textContent = '<%= filename %>'
-	
-		mimeTypeEl.textContent = ' Mimetype: <%= mimetype %>'
 	}
 </script>
