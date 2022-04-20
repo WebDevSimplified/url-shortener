@@ -7,7 +7,7 @@ const fs = require("fs");
 const path = require("path");
 
 const fileupload = true;
-const deletable = false;
+const deletable = true;
 
 function file2Number(filepath, number) {
   const seperator = "-";

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+	
   <title>Ani Shorten</title>
 </head>
 <body>
@@ -59,14 +60,14 @@
                 <label for="fullUrl" class="block text-sm font-medium text-gray-700"> Website * </label>
                 <div class="mt-1 flex rounded-md shadow-sm">
                   <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"> http:// </span>
-                  <input required type="text" name="fullUrl" id="fullUrl" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
+                  <input required type="text" name="fullUrl" id="fullUrl" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed" placeholder="www.example.com" />
                 </div>
               </div>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
               <label for="shortUrl" class="block text-sm font-medium text-gray-700">Short Url</label>
-              <input type="text" name="shortUrl" id="shortUrl" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="A custom path? (optional)" />
+              <input type="text" name="shortUrl" id="shortUrl" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md disabled:bg-gray-100 disabled:cursor-not-allowed" placeholder="A custom path? (optional)" />
             </div>
           </div>
           <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex justify-between">
@@ -78,7 +79,7 @@
       hover:file:bg-violet-100 file:disabled:bg-slate-300 file:disabled:text-slate-500 file:disabled:cursor-not-allowed disabled:cursor-not-allowed 
       invalid:border-pink-500 invalid:text-pink-600
       focus:invalid:border-pink-500 focus:invalid:ring-pink-500">
-            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-wait">
+            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-progress">
               <!-- Heroicon name: solid/check -->
               <svg class="-ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" id="tickSvg">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -144,6 +145,20 @@
 	
 	const mobText = document.querySelector('#mobBanner')
 	const deskText = document.querySelector('#deskBanner')
+
+
+	// Form variables
+	
+	const form = document.querySelector('form#shortenform');
+	const fullUrlInp = document.getElementById('fullUrl');
+	const shortUrlInp = document.getElementById('shortUrl');
+	const file = document.getElementById('file')	
+	
+	const submitBtn = form.querySelector('button[type="submit"]')
+	const tickSvg = submitBtn.querySelector('#tickSvg')
+	const loadingSvg = submitBtn.querySelector('#loadingSvg')
+
+
 	if (searchParams.has('err')) {
 		if (searchParams.get('err') === '409') {
 			banner.classList.remove('hidden')
@@ -165,34 +180,33 @@
 	function createURL(input) {
 		var reader = new FileReader();
 		reader.onload = function (e) {
-            var fullUrlEl = document.getElementById('fullUrl');
 
-			fullUrlEl.value = input.files[0].name;
+			fullUrlInp.value = input.files[0].name;
 
-			fullUrlEl.disabled = true;
-			fullUrlEl.required = true;
-			fullUrlEl.classList.add('cursor-not-allowed');
-			fullUrlEl.classList.add('bg-gray-100');
+			fullUrlInp.disabled = true;
 		
         };
 		reader.readAsDataURL(input.files[0]);
 	}
 
-	const form = document.querySelector('form#shortenform')
-	const submitBtn = form.querySelector('button[type="submit"]')
-	const tickSvg = submitBtn.querySelector('#tickSvg')
-	const loadingSvg = submitBtn.querySelector('#loadingSvg')
 
 	if ('<%= fileinput %>' == false) {
-		var file = document.getElementById('file')	
 		file.disabled = true;
 	}
 
 	form.addEventListener('submit', function() {
+		this.submit();
+	// Disable
+		// fullUrlInp.disabled = true;
+		// shortUrlInp.disabled = true;
+		// file.disabled = true;
 		submitBtn.disabled = true;
+
+		submitBtn.lastChild.data = '\n              Creating...\n            '
 	
 		tickSvg.classList.add('hidden')
 		loadingSvg.classList.remove('hidden');
+return false;
 	})
 </script>
 </body>
