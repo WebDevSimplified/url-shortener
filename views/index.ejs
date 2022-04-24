@@ -7,6 +7,12 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 	
   <title>Ani Shorten</title>
+	<style>
+		* {
+    transition-property: background-color,color,box-shadow!important;
+    transition-duration: 500ms!important;
+}
+	</style>
 </head>
 <body>
 	
@@ -60,14 +66,14 @@
                 <label for="fullUrl" class="block text-sm font-medium text-gray-700"> Website * </label>
                 <div class="mt-1 flex rounded-md shadow-sm">
                   <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"> http:// </span>
-                  <input required type="text" name="fullUrl" id="fullUrl" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed" placeholder="www.example.com" />
+                  <input required type="text" name="fullUrl" id="fullUrl" class="focus:ring-indigo-500 focus:ring-4  focus:ring-opacity-50 focus:outline-none focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed duration-500 transition-all transition-shadow transition-colors" placeholder="www.example.com" />
                 </div>
               </div>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
               <label for="shortUrl" class="block text-sm font-medium text-gray-700">Short Url</label>
-              <input type="text" name="shortUrl" id="shortUrl" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md disabled:bg-gray-100 disabled:cursor-not-allowed" placeholder="A custom path? (optional)" />
+              <input type="text" name="shortUrl" id="shortUrl" class="mt-1 focus:ring-indigo-500 focus:ring-4  focus:ring-opacity-50 focus:outline-none focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md disabled:bg-gray-100 disabled:cursor-not-allowed duration-500 transition-all transition-shadow transition-colors" placeholder="A custom path? (optional)" />
             </div>
           </div>
           <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex justify-between">
@@ -76,15 +82,13 @@
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
       file:bg-violet-50 file:text-violet-700
-      hover:file:bg-violet-100 file:disabled:bg-slate-300 file:disabled:text-slate-500 file:disabled:cursor-not-allowed disabled:cursor-not-allowed 
-      invalid:border-pink-500 invalid:text-pink-600
-      focus:invalid:border-pink-500 focus:invalid:ring-pink-500">
-            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-progress">
+      hover:file:bg-violet-100 file:disabled:bg-slate-300 file:disabled:text-slate-500 file:disabled:cursor-not-allowed disabled:cursor-not-allowed file:focus:ring-indigo-500 file:focus:ring-4 file:focus:ring-opacity-50 file:focus:outline-none focus:outline-none file:focus:border-indigo-500 duration-500 transition-all file:transition-colors file:transition-shadow ">
+<button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition-colors duration-500 transition-all transition-shadow disabled:bg-gray-400 disabled:cursor-progress">
               <!-- Heroicon name: solid/check -->
               <svg class="-ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" id="tickSvg">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-				<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" viewBox="0 0 24 24" aria-hidden="true" id="loadingSvg">
+				<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" id="loadingSvg">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
@@ -110,6 +114,9 @@
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clicks</th>
 				<% if (deletable) { %>
 			  <th scope="col" class="relative px-6 py-3">
+                <span class="sr-only">Update</span>
+              </th>
+			  <th scope="col" class="relative px-6 py-3">
                 <span class="sr-only">Delete</span>
               </th>
 				<% } %>
@@ -123,7 +130,10 @@
             <td><a href="<%= shortUrl.short %>" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-900"><%= shortUrl.short %></a></td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= shortUrl.clicks %></td>
 			  				<% if (deletable) { %>
-			                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+								<td class="py-4 pr-0 whitespace-nowrap text-right text-sm font-medium m-0 ">
+                <a href="update/<%= shortUrl.short %>" class="text-indigo-600 hover:text-indigo-900">Update</a>
+              </td>
+			                <td class="pr-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <a href="delete/<%= shortUrl.short %>" class="text-red-600 hover:text-red-900">Delete</a>
               </td>
 								
